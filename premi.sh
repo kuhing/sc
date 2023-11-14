@@ -212,7 +212,7 @@ print_install "Membuat direktori xray"
     done < /proc/meminfo
     Ram_Usage="$((mem_used / 1024))"
     Ram_Total="$((mem_total / 1024))"
-    export tanggal=`date -d "0 days" +"%d-%m-%Y - %X" `
+    export tanggal=`date -d "0 days" +"%H:%M:%S - %X" `
     export OS_Name=$( cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' )
     export Kernel=$( uname -r )
     export Arch=$( uname -m )
