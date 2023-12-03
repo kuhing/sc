@@ -55,7 +55,36 @@ checking_sc() {
     exit
   fi
 }
-checking_sc
+trial() {
+rm -rf /etc/trial
+user=Trial-`</dev/urandom tr -dc X-Z0-9 | head -c4`
+sayang=$(date -d "1 days" +"%Y-%m-%d")
+ipsaya=$(wget -qO- ipinfo.io/ip)
+data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+date_list=$(date +"%Y-%m-%d" -d "$data_server")
+echo "### ${user} ${sayang} ${ipsaya} " >> /etc/trial
+sleep 1
+data_ip=$(cat /etc/trial)
+useexp=$(grep -w "^### $user" "/etc/trial" | cut -d ' ' -f 3 | sort | uniq)
+  if [[ $date_list < $useexp ]]; then
+    echo -ne
+  else
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e "\033[42m          SANAK STORE AUTOSCRIPT          \033[0m"
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e ""
+    echo -e "            ${RED}PERMISSION DENIED !${NC}"
+    echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
+    echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
+    echo -e "             \033[0;33mContact Admin :${NC}"
+    echo -e "      \033[0;36mTelegram${NC} t.me/Baung2012"
+    echo -e "      ${GREEN}WhatsApp${NC} wa.me/6285754292950"
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    exit
+  fi
+}
+
+trial
 # // Checking Os Architecture
 if [[ $( uname -m | awk '{print $1}' ) == "x86_64" ]]; then
     echo -e "${OK} Your Architecture Is Supported ( ${green}$( uname -m )${NC} )"
@@ -199,7 +228,7 @@ print_install "Membuat direktori xray"
     chmod +x /var/log/xray
     touch /var/log/xray/access.log
     touch /var/log/xray/error.log
-    mkdir -p /var/lib/kyt >/dev/null 2>&1
+    mkdir -p /var/lib/sanakstore >/dev/null 2>&1
     # // Ram Information
     while IFS=":" read -r a b; do
     case $a in
@@ -309,7 +338,7 @@ echo ""
 if [[ $host == "1" ]]; then
 echo -e "   \e[1;32mPlease Enter Your Subdomain $NC"
 read -p "   Subdomain: " host1
-echo "IP=" >> /var/lib/kyt/ipvps.conf
+echo "IP=" >> /var/lib/sanakstore/ipvps.conf
 echo $host1 > /etc/xray/domain
 echo $host1 > /root/domain
 echo ""
@@ -394,6 +423,14 @@ function make_folder_xray() {
     mkdir -p /etc/xray
     mkdir -p /etc/vmess
     mkdir -p /etc/vless
+    mkdir -p /etc/sanakstore/limit/vmess/ip
+    mkdir -p /etc/sanakstore/limit/vless/ip
+    mkdir -p /etc/sanakstore/limit/trojan/ip
+    mkdir -p /etc/sanakstore/limit/ssh/ip
+    mkdir -p /etc/limit/vmess
+    mkdir -p /etc/limit/vless
+    mkdir -p /etc/limit/trojan
+    mkdir -p /etc/limit/ssh
     mkdir -p /etc/trojan
     mkdir -p /etc/shadowsocks
     mkdir -p /etc/ssh
@@ -410,11 +447,6 @@ function make_folder_xray() {
     touch /etc/shadowsocks/.shadowsocks.db
     touch /etc/ssh/.ssh.db
     touch /etc/bot/.bot.db
-    echo "& plughin Account" >>/etc/vmess/.vmess.db
-    echo "& plughin Account" >>/etc/vless/.vless.db
-    echo "& plughin Account" >>/etc/trojan/.trojan.db
-    echo "& plughin Account" >>/etc/shadowsocks/.shadowsocks.db
-    echo "& plughin Account" >>/etc/ssh/.ssh.db
     }
 #Instal Xray
 function install_xray() {
@@ -928,12 +960,16 @@ print_success "All Packet"
 function menu(){
     clear
     print_install "Memasang Menu Packet"
-    wget ${REPO}menu/menu.zip
+    wget ${REPO}bot/menu.zip
     unzip menu.zip
     chmod +x menu/*
     mv menu/* /usr/local/sbin
     rm -rf menu
     rm -rf menu.zip
+}
+
+ins_janda() {
+wget -q https://github.com/sanakstore/vip/raw/main/backup/tm.sh &&  chmod +x tm.sh && ./tm.sh
 }
 
 # Membaut Default Menu
@@ -1050,12 +1086,14 @@ clear
     ins_epro
     ins_restart
     menu
+    ins_janda
     profile
     enable_services
 }
 instal
 echo ""
 history -c
+rm -rf tm.sh
 rm -rf /root/menu
 rm -rf /root/*.zip
 rm -rf /root/*.sh
