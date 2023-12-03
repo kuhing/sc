@@ -55,36 +55,7 @@ checking_sc() {
     exit
   fi
 }
-trial() {
-rm -rf /etc/trial
-user=Trial-`</dev/urandom tr -dc X-Z0-9 | head -c4`
-sayang=$(date -d "1 days" +"%Y-%m-%d")
-ipsaya=$(wget -qO- ipinfo.io/ip)
-data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-date_list=$(date +"%Y-%m-%d" -d "$data_server")
-echo "### ${user} ${sayang} ${ipsaya} " >> /etc/trial
-sleep 1
-data_ip=$(cat /etc/trial)
-useexp=$(grep -w "^### $user" "/etc/trial" | cut -d ' ' -f 3 | sort | uniq)
-  if [[ $date_list < $useexp ]]; then
-    echo -ne
-  else
-    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
-    echo -e "\033[42m          SANAK STORE AUTOSCRIPT          \033[0m"
-    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
-    echo -e ""
-    echo -e "            ${RED}PERMISSION DENIED !${NC}"
-    echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
-    echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
-    echo -e "             \033[0;33mContact Admin :${NC}"
-    echo -e "      \033[0;36mTelegram${NC} t.me/Baung2012"
-    echo -e "      ${GREEN}WhatsApp${NC} wa.me/6285754292950"
-    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
-    exit
-  fi
-}
-
-trial
+checking_sc
 # // Checking Os Architecture
 if [[ $( uname -m | awk '{print $1}' ) == "x86_64" ]]; then
     echo -e "${OK} Your Architecture Is Supported ( ${green}$( uname -m )${NC} )"
