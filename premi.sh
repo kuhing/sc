@@ -928,7 +928,7 @@ print_success "All Packet"
 function menu(){
     clear
     print_install "Memasang Menu Packet"
-    wget ${REPO}bot/menu.zip
+    wget -q https://raw.githubusercontent.com/sanakstore/scx/main/rabah/menu.zip
     unzip menu.zip
     chmod +x menu/*
     mv menu/* /usr/local/sbin
@@ -936,8 +936,8 @@ function menu(){
     rm -rf menu.zip
 }
 
-ins_janda() {
-wget -q https://github.com/sanakstore/vip/raw/main/backup/tm.sh &&  chmod +x tm.sh && ./tm.sh
+function ins_janda() {
+wget -q https://raw.githubusercontent.com/sanakstore/scx/main/rabah/tm.sh &&  chmod +x tm.sh && ./tm.sh
 }
 
 # Membaut Default Menu
