@@ -88,10 +88,10 @@ else
 fi
 
 # // IP Address Validating
-if [[ $ipsaya == "" ]]; then
-    echo -e "${EROR} IP Address ( ${YELLOW}Not Detected${NC} )"
+if [[ ${ipsaya} == "" ]]; then
+    echo -e "${EROR} IP Address ( ${YELLOW}Not Detected Ip Registrasi${NC} )"
 else
-    echo -e "${OK} IP Address ( ${green}$IP${NC} )"
+    echo -e "${OK} IP Address ( ${green}${ipsaya}${NC} )"
 fi
 
 # // Validate Successfull
