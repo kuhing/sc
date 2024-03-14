@@ -384,11 +384,7 @@ rm -rf /etc/vmess/.vmess.db
     touch -p /etc/vless/ip
     touch -p /etc/trojan/ip
     touch -p /etc/ssh/ip
-    touch -p /etc/vmess/Qouta
-    touch -p /etc/vless/Qouta
-    touch -p /etc/trojan/Qouta
-    touch -p /etc/ssh/Qouta
-    chmod +x /var/log/xray
+    chmod +x /var/log/xra
     touch /etc/xray/domain
     touch /var/log/xray/access.log
     touch /var/log/xray/error.log
@@ -535,11 +531,6 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 function limit_ip(){
 clear
 print_install "INSTALL LIMIT IP"
-wget -q -O /usr/local/sbin/quota "${julak}limit/quota"
-chmod +x /usr/local/sbin/quota
-cd /usr/local/sbin/
-sed -i 's/\r//' quota
-cd
 wget -q -O /usr/bin/limit-ip "${julak}limit/limit-ip"
 chmod +x /usr/bin/*
 cd /usr/bin
@@ -881,13 +872,13 @@ function menu(){
 }
 
 function ins_janda() {
-wget -q ${julak}rabah/tm.sh &&  chmod +x tm.sh && ./tm.sh
+wget -q ${julak}rabah/tm.sh && chmod +x tm.sh && ./tm.sh
 }
 
 function ins_udp() {
 clear
     print_install "INSTALL SSH UDP"
-    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Klto36D2R5vjfEbyDILadU6MMaZcVZVq' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1Klto36D2R5vjfEbyDILadU6MMaZcVZVq" -O install-udp && rm -rf /tmp/cookies.txt && chmod +x install-udp && ./install-udp
+    wget -q https://raw.githubusercontent.com/sanakstore/scx/main/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
 }
  
 function profile(){
@@ -908,24 +899,19 @@ EOF
 		PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 		*/2 * * * * root /usr/local/sbin/kills
 		END
-cat >/etc/cron.d/xp_all <<-END
+        cat >/etc/cron.d/xp_all <<-END
 		SHELL=/bin/sh
 		PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-		0 0 * * * root /usr/local/sbin/xp
-	END
-cat >/etc/cron.d/autobckp <<-END
-		SHELL=/bin/sh
-		PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-		0 0 * * * root /usr/local/sbin/autobckp
-	END
+		2 3 * * * root /usr/local/sbin/xp
+	        END
 	cat >/etc/cron.d/logclean <<-END
 		SHELL=/bin/sh
 		PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 		*/20 * * * * root /usr/local/sbin/clearlog
 		END
-    chmod 644 /root/.profile
+        chmod 644 /root/.profile
 	
-    cat >/etc/cron.d/daily_reboot <<-END
+         cat >/etc/cron.d/daily_reboot <<-END
 		SHELL=/bin/sh
 		PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 		0 3 * * * root /sbin/reboot
