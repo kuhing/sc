@@ -588,60 +588,6 @@ EOF
 systemctl daemon-reload
 systemctl restart trip
 systemctl enable trip
-
-#QUOTA VMESS
-cat >/etc/systemd/system/qmv.service << EOF
-[Unit]
-Description=My
-ProjectAfter=network.target
-
-[Service]
-WorkingDirectory=/root
-ExecStart=/usr/local/sbin/quota vmess
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF
-systemctl daemon-reload
-systemctl restart qmv
-systemctl enable qmv
-
-#QUOTA VLESS
-cat >/etc/systemd/system/qmvl.service << EOF
-[Unit]
-Description=My
-ProjectAfter=network.target
-
-[Service]
-WorkingDirectory=/root
-ExecStart=/usr/local/sbin/quota vless
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF
-systemctl daemon-reload
-systemctl restart qmvl
-systemctl enable qmvl
-
-#QUOTA TROJAN
-cat >/etc/systemd/system/qmtr.service << EOF
-[Unit]
-Description=My
-ProjectAfter=network.target
-
-[Service]
-WorkingDirectory=/root
-ExecStart=/usr/local/sbin/quota trojan
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF
-systemctl daemon-reload
-systemctl restart qmtr
-systemctl enable qmtr
 # // INSTALL UDPGW SSH
 wget -q ${julak}waluh/ins-badvpn &&  chmod +x ins-badvpn && ./ins-badvpn
 }
